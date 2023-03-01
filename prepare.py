@@ -15,8 +15,11 @@ def basic_clean(string):
     This function takes in a string and lowers the case, normalizes unicode characters, 
     and uses regex to replace anything that is not a letter, number, whitespace or a single quote.
     '''
+    # lower it
     string = string.lower()
+    # normalize it
     string = unicodedata.normalize('NFKD', string).encode('ascii', 'ignore').decode('utf-8')
+    # regex it 
     string = re.sub(r'[^a-z0-9\s]', '', string)
     
     return string
@@ -29,7 +32,9 @@ def tokenize(string):
     '''
     This function takes in a string and tokenizes all the words in the string.
     '''
+    # create object
     tokenize = nltk.tokenize.ToktokTokenizer()
+    # spit out tokenize
     string = tokenize.tokenize(string)
     
     return string
