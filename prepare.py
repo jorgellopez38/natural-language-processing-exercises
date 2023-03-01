@@ -101,3 +101,31 @@ def remove_stopwords(string, extra_words = [], exclude_words = []):
     # return the document back
     return string_without_stopwords
 
+
+############################################### Prepare Article Function ################################################
+
+
+def prep_article_data(df, column, extra_words=[], exclude_words=[]):
+    '''
+    This function take in a df and the string name for a text column with 
+    option to pass lists for extra_words and exclude_words and
+    returns a df with the text article title, original text, stemmed text,
+    lemmatized text, cleaned, tokenized, & lemmatized text with stopwords removed.
+    '''
+    #original text from content column
+    df['original'] = df['content']
+    
+    #chain together clean, tokenize, remove stopwords
+    df['clean'] = df[column].apply(basic_clean)\
+                            .apply(tokenize)\
+                            .apply(remove_stopwords, 
+                                   extra_words=extra_words, 
+                                   exclude_words=exclude_words)
+    
+    #chain clean, tokenize, stem, remove stopwords
+    df['stemmed'] = df['clean'].apply(stem)
+    
+    #clean clean, tokenize, lemmatize, remove stopwords
+    df['lemmatized'] = df['clean'].apply(lemmatize)
+    
+    return df[['title', 'original', 'clean', 'stemmed', 'lemmatized']]
