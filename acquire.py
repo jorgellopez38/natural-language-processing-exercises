@@ -97,6 +97,6 @@ def get_news_articles(topic_list):
         
         json.dump(final_list, f)
         
-    return final_list    
+    return final_list   
 
 
